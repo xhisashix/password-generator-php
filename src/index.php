@@ -1,2 +1,5 @@
 <?php
-echo "Hello World!";
+require_once 'app/controllers/PasswordController.php';
+
+$controller = new PasswordController();
+$controller->handle();
