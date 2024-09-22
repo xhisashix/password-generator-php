@@ -3,7 +3,7 @@
 
 <head>
   <title>パスワード生成</title>
-  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="/app/css/styles.css">
 </head>
 
 <body>
