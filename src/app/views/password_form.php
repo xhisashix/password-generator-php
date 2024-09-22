@@ -20,6 +20,8 @@
       <label for="includeNumbers">数字を含める</label><br>
       <input type="checkbox" id="includeSymbols" name="includeSymbols" checked>
       <label for="includeSymbols">記号を含める</label><br><br>
+      <label for="generateCount">生成するパスワードの数:</label>
+      <input type="number" id='generateCount' name='generateCount' min='1' value='5'><br><br>
       <input type="submit" value="生成">
     </form>
   </main>

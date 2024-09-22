@@ -9,7 +9,13 @@
 <body>
   <main>
     <h1>生成されたパスワード</h1>
-    <p><?= $password ?></p>
+    <?php
+    if (isset($password)) {
+      foreach ($password as $pass) {
+        echo "<p>$pass</p>";
+      }
+    }
+    ?>
   </main>
 </body>
 

@@ -19,20 +19,21 @@ class PasswordController
   {
     $model = new PasswordModel();
     $length = $_POST['length'];
-    $includeLowercase = isset($_POST['includeLowercase']);
-    $includeUppercase = isset($_POST['includeUppercase']);
-    $includeNumbers = isset($_POST['includeNumbers']);
-    $includeSymbols = isset($_POST['includeSymbols']);
+    $includeLowercase = $_POST['includeLowercase'];
+    $includeUppercase = $_POST['includeUppercase'];
+    $includeNumbers = $_POST['includeNumbers'];
+    $includeSymbols = $_POST['includeSymbols'];
+    $generateCount = $_POST['generateCount'];
 
-    $option = [
+    $options = [
       'useUppercase' => $includeUppercase,
       'useLowercase' => $includeLowercase,
       'useNumbers' => $includeNumbers,
       'useSymbols' => $includeSymbols,
+      'generateCount' => $generateCount,
     ];
-
-    $password = $model->generatePassword($length, $option);
-    $this->showResult($password);
+    $passwords = $model->generatePassword($length, $options, $generateCount);
+    $this->showResult($passwords);
   }
 
   /**

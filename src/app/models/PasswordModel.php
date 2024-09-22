@@ -16,8 +16,7 @@ class PasswordModel
     if (empty($chars)) {
       throw new Exception('No character sets selected for password generation.');
     }
-
-    return $this->generateRandomPassword($length, $chars);
+    return $this->generatePasswords($length, $chars, $options['generateCount']);
   }
 
   /**
@@ -70,14 +69,16 @@ class PasswordModel
 
   /**
    * Generate some passwords
+   * @param int $length
+   * @param array $options
    * @param int $generateCount
    * @return array $passwords
    */
-  public function generatePasswords($generateCount, $length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols)
+  public function generatePasswords($length, $chars, $generateCount)
   {
     $passwords = [];
     for ($i = 0; $i < $generateCount; $i++) {
-      $passwords[] = $this->generatePassword($length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols);
+      $passwords[] = $this->generateRandomPassword($length, $chars);
     }
     return $passwords;
   }
