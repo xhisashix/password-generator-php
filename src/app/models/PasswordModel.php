@@ -14,6 +14,24 @@ class PasswordModel
    */
   public function generatePassword($length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols)
   {
+    $chars = $this->getCharacterSet($includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols);
+    if (empty($chars)) {
+      throw new Exception('No character sets selected for password generation.');
+    }
+    return $this->generateRandomPassword($length, $chars);
+  }
+
+  /**
+   * Get the character set based on the provided criteria.
+   *
+   * @param bool $includeLowercase
+   * @param bool $includeUppercase
+   * @param bool $includeNumbers
+   * @param bool $includeSymbols
+   * @return string The character set.
+   */
+  private function getCharacterSet($includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols)
+  {
     $lowercase = 'abcdefghijklmnopqrstuvwxyz';
     $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $numbers = '0123456789';
@@ -32,10 +50,18 @@ class PasswordModel
     if ($includeSymbols) {
       $chars .= $symbols;
     }
+    return $chars;
+  }
 
-    if (empty($chars)) {
-      throw new Exception('No character sets selected for password generation.');
-    }
+  /**
+   * Generate a random password from the character set.
+   *
+   * @param int $length
+   * @param string $chars
+   * @return string The generated password.
+   */
+  private function generateRandomPassword($length, $chars)
+  {
     $password = '';
     for ($i = 0; $i < $length; $i++) {
       $password .= $chars[random_int(0, strlen($chars) - 1)];

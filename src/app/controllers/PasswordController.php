@@ -5,18 +5,43 @@ class PasswordController
 {
   public function handle()
   {
-    $model = new PasswordModel();
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $length = $_POST['length'];
-      $includeLowercase = isset($_POST['includeLowercase']);
-      $includeUppercase = isset($_POST['includeUppercase']);
-      $includeNumbers = isset($_POST['includeNumbers']);
-      $includeSymbols = isset($_POST['includeSymbols']);
-      $password = $model->generatePassword($length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols);
-      include 'app/views/password_result.php';
+      $this->processForm();
     } else {
-      include 'app/views/password_form.php';
+      $this->showForm();
     }
+  }
+
+  /**
+   * Process the form submission and generate the password.
+   */
+  private function processForm()
+  {
+    $model = new PasswordModel();
+    $length = $_POST['length'];
+    $includeLowercase = isset($_POST['includeLowercase']);
+    $includeUppercase = isset($_POST['includeUppercase']);
+    $includeNumbers = isset($_POST['includeNumbers']);
+    $includeSymbols = isset($_POST['includeSymbols']);
+    $password = $model->generatePassword($length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols);
+    $this->showResult($password);
+  }
+
+  /**
+   * Show the password generation form.
+   */
+  private function showForm()
+  {
+    include 'app/views/password_form.php';
+  }
+
+  /**
+   * Show the generated password result.
+   *
+   * @param string $password The generated password.
+   */
+  private function showResult($password)
+  {
+    include 'app/views/password_result.php';
   }
 }
