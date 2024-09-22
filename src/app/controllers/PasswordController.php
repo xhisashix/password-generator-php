@@ -23,7 +23,15 @@ class PasswordController
     $includeUppercase = isset($_POST['includeUppercase']);
     $includeNumbers = isset($_POST['includeNumbers']);
     $includeSymbols = isset($_POST['includeSymbols']);
-    $password = $model->generatePassword($length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols);
+
+    $option = [
+      'useUppercase' => $includeUppercase,
+      'useLowercase' => $includeLowercase,
+      'useNumbers' => $includeNumbers,
+      'useSymbols' => $includeSymbols,
+    ];
+
+    $password = $model->generatePassword($length, $option);
     $this->showResult($password);
   }
 

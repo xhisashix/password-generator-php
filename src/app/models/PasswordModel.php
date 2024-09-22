@@ -5,19 +5,18 @@ class PasswordModel
    * Generates a password based on the provided criteria.
    *
    * @param int $length The length of the password to generate.
-   * @param bool $includeLowercase Whether to include lowercase letters in the password.
-   * @param bool $includeUppercase Whether to include uppercase letters in the password.
-   * @param bool $includeNumbers Whether to include numbers in the password.
-   * @param bool $includeSymbols Whether to include symbols in the password.
-   * @return string The generated password.
+   * @param options array The options for password generation.
+   * @param int $generateCount The number of passwords to generate.
+   * @return array The generated password.
    * @throws Exception Thrown if no character sets are selected for password generation.
    */
-  public function generatePassword($length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols)
+  public function generatePassword($length, $options)
   {
-    $chars = $this->getCharacterSet($includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols);
+    $chars = $this->getCharacterSet($options['useLowercase'], $options['useUppercase'], $options['useNumbers'], $options['useSymbols']);
     if (empty($chars)) {
       throw new Exception('No character sets selected for password generation.');
     }
+
     return $this->generateRandomPassword($length, $chars);
   }
 
@@ -67,5 +66,19 @@ class PasswordModel
       $password .= $chars[random_int(0, strlen($chars) - 1)];
     }
     return $password;
+  }
+
+  /**
+   * Generate some passwords
+   * @param int $generateCount
+   * @return array $passwords
+   */
+  public function generatePasswords($generateCount, $length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols)
+  {
+    $passwords = [];
+    for ($i = 0; $i < $generateCount; $i++) {
+      $passwords[] = $this->generatePassword($length, $includeLowercase, $includeUppercase, $includeNumbers, $includeSymbols);
+    }
+    return $passwords;
   }
 }
